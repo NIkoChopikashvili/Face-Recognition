@@ -9,6 +9,15 @@ OUTPUT_SIZE_WIDTH = 775
 OUTPUT_SIZE_HEIGHT = 600
 
 
+def compareFace(known_encoding, result_encoding):
+    return face_recognition.compare_faces(
+        [known_encoding], result_encoding)
+
+
+def encodeImage(image):
+    return face_recognition.face_encodings(image)
+
+
 def detectLargestFace():
     capture = cv2.VideoCapture(0)
 
@@ -41,11 +50,11 @@ def detectLargestFace():
             faces = faceCascade.detectMultiScale(gray, 1.3, 5)
 
             # Encoding camera face
-            result_encoding = []
-            if face_recognition.face_encodings(resultImage):
-                result_encoding = face_recognition.face_encodings(resultImage)[
+            result_encoding = [""]
+            if encodeImage(resultImage):
+                result_encoding = encodeImage(resultImage)[
                     0]
-            known_encoding = face_recognition.face_encodings(known_image)[0]
+            known_encoding = encodeImage(known_image)[0]
 
             maxArea = 0
             x = 0
@@ -65,9 +74,8 @@ def detectLargestFace():
                               (x + w+10, y + h+20),
                               rectangleColor, 2)
                 if result_encoding.any():
-                    results = face_recognition.compare_faces(
-                        [known_encoding], result_encoding)
-                    print(results)
+                    result = compareFace(known_encoding, result_encoding)
+                    print(result)
 
             largeResult = cv2.resize(resultImage,
                                      (OUTPUT_SIZE_WIDTH, OUTPUT_SIZE_HEIGHT))
