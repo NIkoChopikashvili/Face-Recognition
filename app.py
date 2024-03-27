@@ -3,7 +3,7 @@ import face_recognition
 
 
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-known_image = face_recognition.load_image_file("niko")
+known_image = face_recognition.load_image_file("opencv_frame_0.png")
 
 OUTPUT_SIZE_WIDTH = 775
 OUTPUT_SIZE_HEIGHT = 600
