@@ -3,7 +3,7 @@ import face_recognition
 
 
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-known_image = face_recognition.load_image_file("opencv_frame_0.png")
+known_image = face_recognition.load_image_file("niko")
 
 OUTPUT_SIZE_WIDTH = 775
 OUTPUT_SIZE_HEIGHT = 600
@@ -50,7 +50,7 @@ def detectLargestFace():
             faces = faceCascade.detectMultiScale(gray, 1.3, 5)
 
             # Encoding camera face
-            result_encoding = [""]
+            result_encoding = []
             if encodeImage(resultImage):
                 result_encoding = encodeImage(resultImage)[
                     0]
@@ -73,7 +73,7 @@ def detectLargestFace():
                 cv2.rectangle(resultImage,  (x-10, y-20),
                               (x + w+10, y + h+20),
                               rectangleColor, 2)
-                if result_encoding.any():
+                if any(result_encoding):
                     result = compareFace(known_encoding, result_encoding)
                     print(result)
 
